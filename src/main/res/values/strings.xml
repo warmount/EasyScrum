@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EasyScrum</string>
+    <string name="have_deck">You already have this deck</string>
+    <string name="use_delimiter">Use "," delimiter</string>
+    <string name="choose">Choose deck in menu \"&lt;\" or create new one \"+\"</string>
+
+</resources>

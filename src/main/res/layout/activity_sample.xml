@@ -1,0 +1,94 @@
+<org.sfsteam.easyscrum.view.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                                              android:layout_height="match_parent"
+                                                              tools:context=".SampleActivity">
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#66acf1"
+            android:orientation="vertical" >
+
+        <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_button"
+                android:src="@android:drawable/ic_menu_add"
+                style="@android:style/Theme.Translucent"/>
+
+        <ListView
+                android:id="@+id/menu_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/main_screen">
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/choose"
+                android:id="@+id/hello_text"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="#A9A9A9"
+                android:textSize="20dp"
+                android:layout_margin="20dp"/>
+
+        <GridView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/gridView"
+                android:numColumns="auto_fit"
+                android:stretchMode="spacingWidthUniform"
+                android:columnWidth="100dp"
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                android:visibility="gone"
+                android:clickable="false"
+                android:choiceMode="singleChoice"
+                android:smoothScrollbar="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#7bd510"
+            android:orientation="vertical"
+            android:focusableInTouchMode="false">
+
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deckName"
+                android:inputType="text"
+                android:layout_gravity="center"
+                />
+
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deckString"
+                android:inputType="text"
+                android:hint="@string/use_delimiter"/>
+
+        <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ok_button"
+                android:src="@android:drawable/ic_menu_save"
+                style="@android:style/Theme.Translucent"/>
+
+    </LinearLayout>
+
+</org.sfsteam.easyscrum.view.FlyOutContainer>

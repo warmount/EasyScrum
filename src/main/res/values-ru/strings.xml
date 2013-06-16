@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="choose">Выберите колоду \"&lt;\" или создайте новую \"+\"</string>
+    <string name="have_deck">У Вас уже есть такая колода</string>
+    <string name="use_delimiter">Используйте \",\" как разделитель</string>
+
+</resources>
