@@ -21,23 +21,24 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher"
                 android:layout_weight="0.5"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="-115dp"/>
+                android:layout_gravity="center_horizontal|bottom"
+                android:scaleType="center"
+                android:baselineAlignBottom="false"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:layout_gravity="center_horizontal|top"
-                android:textSize="30dp"/>
+                android:textSize="40dp"/>
     </LinearLayout>
 
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/card_num"
-            android:textSize="120dp"
+            android:textSize="100dp"
             android:gravity="center_vertical|center_horizontal"
             android:layout_gravity="center"
             android:visibility="gone"

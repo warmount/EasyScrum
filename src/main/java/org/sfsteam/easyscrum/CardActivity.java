@@ -24,6 +24,9 @@ public class CardActivity extends Activity {
         String cardValue = b.getString("card");
 
         cardTv = (TextView) root.findViewById(R.id.card_num);
+        if (cardValue.length()<5){
+            cardTv.setTextSize(200);
+        }
         cardTv.setText(cardValue);
         cardTv.setOnClickListener(new View.OnClickListener() {
             @Override

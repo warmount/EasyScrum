@@ -181,7 +181,7 @@ public class SampleActivity extends Activity {
                     new Button.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (deckInGrid !=null && deckInGrid.equals(decks.get(position))){
+                            if (decks.get(position).equals(deckInGrid)){
                                 gvMain.setVisibility(View.GONE);
                                 deckInGrid=null;
                                 hello.setVisibility(View.VISIBLE);
@@ -292,12 +292,16 @@ public class SampleActivity extends Activity {
             LayoutInflater inflater = getLayoutInflater();
 
             View grid = inflater.inflate(R.layout.grid_item, parent, false);
-            final TextView cardValue = (TextView) grid.findViewById(R.id.tvText);
-            cardValue.setText(cards[position]);
-            cardValue.setOnClickListener(new View.OnClickListener() {
+            final TextView cardTv = (TextView) grid.findViewById(R.id.tvText);
+            String cardText = cards[position];
+            if (cardText.length()<5){
+                cardTv.setTextSize(50);
+            }
+            cardTv.setText(cardText);
+            cardTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startCardActivity(view,cardValue.getText().toString());
+                    startCardActivity(view, cardTv.getText().toString());
                 }
             });
             return grid;
