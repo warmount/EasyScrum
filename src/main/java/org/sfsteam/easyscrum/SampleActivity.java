@@ -65,8 +65,8 @@ public class SampleActivity extends Activity {
         listStr = (List<DeckDT>) loadSerializedList(suspend_f);
         if (listStr == null){
             listStr = new ArrayList<DeckDT>();
-            listStr.add(new DeckDT("preplan","1,2,4,8,16"));
-            listStr.add(new DeckDT("plan","1,2,3,5,8,13"));
+            listStr.add(new DeckDT(getString(R.string.preplan),"1,2,4,8,16"));
+            listStr.add(new DeckDT(getString(R.string.plan),"1,2,3,5,8,13"));
         }
         arrayAdapter = new MySimpleAdapter(this, R.layout.list_layout,listStr);
         scrumList.setAdapter(arrayAdapter);
@@ -76,7 +76,7 @@ public class SampleActivity extends Activity {
         gvMain.setOnTouchListener( new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetector.onTouchEvent(event);
-                return true;
+                return false;
             }
         });
 
@@ -118,8 +118,8 @@ public class SampleActivity extends Activity {
     public void startCardActivity(View v, String value){
         Intent intent = new Intent(SampleActivity.this, CardActivity.class);
         Bundle b = new Bundle();
-        b.putString("card", value); //Your id
-        intent.putExtras(b); //Put your id to your next Intent
+        b.putString("card", value);
+        intent.putExtras(b);
         startActivity(intent);
     }
 
@@ -130,18 +130,21 @@ public class SampleActivity extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    //right-to-left swipe
                     if (!isNewOpen){
                     isNewOpen=false;
                     root.toggleMenuClose();
                     return true;
                     }
                 }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    // left-to-right swipe
                     if (!isNewOpen){
                     arrayAdapter.notifyDataSetChanged();
                     root.toggleMenuOpen();
 
                     return true;
                     } else {
+                        hideKeyBoard();
                         isNewOpen=false;
                         root.toggleMenuClose();
                         return true;
@@ -152,7 +155,6 @@ public class SampleActivity extends Activity {
             }
             return false;
         }
-
     }
 
     private class MySimpleAdapter extends ArrayAdapter<DeckDT>{
@@ -236,10 +238,6 @@ public class SampleActivity extends Activity {
                             decks.get(editPosition).setName(dt.getName());
                             decks.get(editPosition).setDeckString(dt.getDeckString());
                             setCardsToGrid(dt);
-                            InputMethodManager imm = (InputMethodManager)getSystemService(
-                                    Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(deckName.getWindowToken(), 0);
-                            imm.hideSoftInputFromWindow(deckString.getWindowToken(), 0);
                         }
                     } else {
                         if (!isDeckUnique(dt, listStr)){
@@ -247,10 +245,6 @@ public class SampleActivity extends Activity {
                         } else {
                             arrayAdapter.add(dt);
                             setCardsToGrid(dt);
-                            InputMethodManager imm = (InputMethodManager)getSystemService(
-                                    Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(deckName.getWindowToken(), 0);
-                            imm.hideSoftInputFromWindow(deckString.getWindowToken(), 0);
                         }
                     }
                 }
@@ -258,8 +252,6 @@ public class SampleActivity extends Activity {
 
             return row;
         }
-
-
 
         private boolean isDeckUnique(DeckDT dt, List<DeckDT> listStr) {
             for (DeckDT dt2:listStr){
@@ -271,12 +263,20 @@ public class SampleActivity extends Activity {
         }
     }
 
+    private void hideKeyBoard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.deckName)).getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.deckString)).getWindowToken(), 0);
+    }
+
     private void setCardsToGrid(DeckDT dt) {
         deckInGrid = dt;
         ArrayAdapter<String> adapter = new MyArrayAdapter(getApplicationContext(), R.layout.grid_item, R.id.tvText, dt.getDeckAsArray());
         gvMain.setAdapter(adapter);
         gvMain.setVisibility(View.VISIBLE);
         hello.setVisibility(View.GONE);
+        hideKeyBoard();
         root.toggleMenuClose();
     }
 
@@ -291,19 +291,27 @@ public class SampleActivity extends Activity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
 
-            View grid = inflater.inflate(R.layout.grid_item, parent, false);
+            final View grid = inflater.inflate(R.layout.grid_item, parent, false);
             final TextView cardTv = (TextView) grid.findViewById(R.id.tvText);
-            String cardText = cards[position];
+            final String cardText = cards[position];
             if (cardText.length()<5){
                 cardTv.setTextSize(50);
             }
+
             cardTv.setText(cardText);
+            cardTv.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    return  false;
+                }
+            });
             cardTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startCardActivity(view, cardTv.getText().toString());
+                    startCardActivity(cardTv, cardTv.getText().toString());
                 }
             });
+
             return grid;
         }
     }

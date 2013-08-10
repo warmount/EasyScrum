@@ -3,5 +3,7 @@
     <string name="choose">Выберите колоду \"&lt;\" или создайте новую \"+\"</string>
     <string name="have_deck">У Вас уже есть такая колода</string>
     <string name="use_delimiter">Используйте \",\" как разделитель</string>
+    <string name="plan">Планирование(Фибоначчи)</string>
+    <string name="preplan">Предпланирование(степень 2)</string>
 
 </resources>

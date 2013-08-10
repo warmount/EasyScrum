@@ -65,25 +65,6 @@ public class FlyOutContainer extends LinearLayout {
 
     }
 
-//    public void toggleMenu() {
-//        switch (this.menuCurrentState) {
-//            case CLOSED:
-//                this.menu.setVisibility(View.VISIBLE);
-//                this.currentContentOffset = this.getMenuWidth();
-//                this.content.offsetLeftAndRight(currentContentOffset);
-//                this.menuCurrentState = MenuState.OPEN;
-//                break;
-//            case OPEN:
-//                this.content.offsetLeftAndRight(-currentContentOffset);
-//                this.currentContentOffset = 0;
-//                this.menuCurrentState = MenuState.CLOSED;
-//                this.menu.setVisibility(View.GONE);
-//                break;
-//        }
-//
-//        this.invalidate();
-//    }
-
     public void toggleMenuOpen() {
 
         this.menu.setVisibility(View.VISIBLE);

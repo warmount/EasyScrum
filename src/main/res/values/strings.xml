@@ -5,5 +5,7 @@
     <string name="have_deck">You already have this deck</string>
     <string name="use_delimiter">Use "," delimiter</string>
     <string name="choose">Choose deck in menu \"&lt;\" or create new one \"+\"</string>
+    <string name="plan">Planning(Fibonacci)</string>
+    <string name="preplan">Preplanning(power of 2)</string>
 
 </resources>
