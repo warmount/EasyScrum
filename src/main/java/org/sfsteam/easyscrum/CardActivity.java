@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ public class CardActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.root = (LinearLayout) this.getLayoutInflater().inflate(R.layout.card_layout, null);
         this.setContentView(root);
-
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
         Bundle b = getIntent().getExtras();
         String cardValue = b.getString("card");
 
