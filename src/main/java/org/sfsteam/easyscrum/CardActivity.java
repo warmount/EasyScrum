@@ -1,10 +1,8 @@
 package org.sfsteam.easyscrum;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +12,7 @@ import android.widget.TextView;
 public class CardActivity extends Activity {
     LinearLayout root;
     TextView cardTv;
+    int cardState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +31,35 @@ public class CardActivity extends Activity {
         cardTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
             }
         });
-
-
     }
 
     public void showCard(View v){
         LinearLayout startLay = (LinearLayout) root.findViewById(R.id.start);
         startLay.setVisibility(View.GONE);
         cardTv.setVisibility(View.VISIBLE);
+        cardState = 1;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        if (cardState == 1){
+            outState.putBoolean("open",true);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.getBoolean("open")) {
+            LinearLayout startLay = (LinearLayout) root.findViewById(R.id.start);
+            startLay.setVisibility(View.GONE);
+            TextView cardTv = (TextView) root.findViewById(R.id.card_num);
+            cardTv.setVisibility(View.VISIBLE);
+            cardState = 1;
+        }
     }
 }

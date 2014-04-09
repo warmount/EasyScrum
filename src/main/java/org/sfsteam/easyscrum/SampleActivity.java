@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.sfsteam.easyscrum.data.DeckDT;
 import org.sfsteam.easyscrum.view.FlyOutContainer;
+import org.sfsteam.easyscrum.view.MyGestureListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,7 +72,7 @@ public class SampleActivity extends Activity {
         arrayAdapter = new MySimpleAdapter(this, R.layout.list_layout,listStr);
         scrumList.setAdapter(arrayAdapter);
 
-        final GestureDetector gestureDetector = new GestureDetector(this, new MyGestureListener());
+        final GestureDetector gestureDetector = new GestureDetector(this, new MyGestureListener(isNewOpen,root,arrayAdapter));
         gvMain = (GridView) findViewById(R.id.gridView);
         gvMain.setOnTouchListener( new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -101,7 +102,6 @@ public class SampleActivity extends Activity {
                 isEdit=false;
             }
         });
-
     }
 
     public void toggleMenuClose(View v){
@@ -123,40 +123,6 @@ public class SampleActivity extends Activity {
         startActivity(intent);
     }
 
-
-    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener{
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
-                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    //right-to-left swipe
-                    if (!isNewOpen){
-                    isNewOpen=false;
-                    root.toggleMenuClose();
-                    return true;
-                    }
-                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    // left-to-right swipe
-                    if (!isNewOpen){
-                    arrayAdapter.notifyDataSetChanged();
-                    root.toggleMenuOpen();
-
-                    return true;
-                    } else {
-                        hideKeyBoard();
-                        isNewOpen=false;
-                        root.toggleMenuClose();
-                        return true;
-                    }
-                }
-            } catch (Exception e) {
-                // nothing
-            }
-            return false;
-        }
-    }
-
     private class MySimpleAdapter extends ArrayAdapter<DeckDT>{
         List<DeckDT> decks;
         int editPosition;
@@ -170,10 +136,9 @@ public class SampleActivity extends Activity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            View row = null;
             LayoutInflater inflater = getLayoutInflater();
 
-            row = inflater.inflate(R.layout.list_layout, parent, false);
+            View row = inflater.inflate(R.layout.list_layout, parent, false);
 
             // inflate other items here :
             ImageButton deleteButton = (ImageButton) row.findViewById(R.id.del_button);
@@ -363,5 +328,31 @@ public class SampleActivity extends Activity {
     public void onPause(){
         super.onPause();
         saveList();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        int i=0;
+        if (deckInGrid!=null) {
+            outState.putString("deck", deckInGrid.getDeckString());
+            outState.putString("deckName", deckInGrid.getName());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String deck = savedInstanceState.getString("deck");
+        if (deck!=null) {
+            deckInGrid = new DeckDT(savedInstanceState.getString("deckName"),savedInstanceState.getString("deck"));
+            ArrayAdapter<String> adapter = new MyArrayAdapter(getApplicationContext(), R.layout.grid_item, R.id.tvText, deck.split(","));
+            GridView gvMain = (GridView) findViewById(R.id.gridView);
+            gvMain.setAdapter(adapter);
+            gvMain.setVisibility(View.VISIBLE);
+            TextView hello = (TextView) findViewById(R.id.hello_text);
+            hello.setVisibility(View.GONE);
+        }
     }
 }
