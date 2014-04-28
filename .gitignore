@@ -213,3 +213,8 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.apk
+*.iml
+gen/org/sfsteam/easyscrum/BuildConfig.java
+gen/org/sfsteam/easyscrum/Manifest.java
+gen/org/sfsteam/easyscrum/R.java

@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">EasyScrumV1</string>
+    <string name="use_delimiter">Nutzen Sie "," als Trenner</string>
+    <string name="plan">Planen(Fibonacci)</string>
+    <string name="preplan">Vorplanung(Stufe 2)</string>
+    <string name="choose">Wählen Sie einen Stapel aus dem Menü \"&lt;\" oder schaffen Sie einen neuen \"+\"</string>
+    <string name="have_deck"> Der Stapel mit gleichen Karten existiert schon </string>
+
+</resources>

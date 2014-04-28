@@ -3,21 +3,39 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 apply plugin: 'android'
 
-dependencies {
-    compile files('libs/android-support-v4.jar')
+repositories {
+    mavenCentral()
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0.0"
-
+    compileSdkVersion 19
+    buildToolsVersion '19.0.3'
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 16
+        targetSdkVersion 19
+    }
+    signingConfigs {
+        release {
+            storeFile file("../../easyscrum.keystore")
+            storePassword "Pa\$worK12"
+            keyAlias "easyscrum"
+            keyPassword "Pa\$worK12"
+        }
+    }
+    buildTypes {
+        release {
+
+            signingConfig signingConfigs.release
+        }
+    }
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
     }
 }
